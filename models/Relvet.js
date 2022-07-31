@@ -342,6 +342,22 @@ const AddUnity =(pack,callback)=>{
     }
 }
 
+
+/**
+ * 
+ * @param {idUnity} pack 
+ * @param {Err,Result} callback 
+ * 
+ * join :
+ *  Unity U 
+ *  TypeUnity TU 
+ *  Semestre SM 
+ *  TypeSemestre TS 
+ *  Relvet R 
+ *  Student S 
+ * 
+ */
+
 const GetUnity = (pack,callback)=>{
     if(pack.hasOwnProperty('idUnity')){
         let q = "select U.idUnity,U.Mark,TU.idTypeUnity,TU.name as Unity,TS.idTypeSemestre,TS.name as Semestre, S.idStudent,concat(S.fisrtname,' ',S.lastname) from Unity U join TypeUnity TU join Semestre SM join TypeSemestre TS join Relvet R join Student S on SM.idTypeSemestre= ST.idTypeSemestre and U.idTypeUnity=UT.idTypeUnity and U.idSemestre = SM.idSemestre and SM.idRelvet = T.idRelvet and R.idStudent = S.idStudent ";
@@ -353,6 +369,136 @@ const GetUnity = (pack,callback)=>{
         callback("no id Unity",null)
     }
 }
+
+const ModifyUnity = (pack,callback)=>{
+    let md = "update Unity set "; 
+    let and=false
+    if(pack.hasOwnProperty('Mark')){
+        let q1 = " Mark = '"+pack.Mark+"' ";
+        if(and){
+            md+=" , "+q1;
+        }else{
+            and=true;
+            md+=q1;
+        }
+     
+    }
+
+    if(pack.hasOwnProperty('idSemestre')){
+        let q1 = " idSemestre = "+pack.idSemestre+" ";
+        if(and){
+            md+=" , "+q1;
+        }else{
+            and=true;
+            md+=q1;
+        }
+     
+    }
+
+    if(pack.hasOwnProperty('idTypeUnity')){
+        let q1 = " idTypeUnity = "+pack.idTypeUnity+" ";
+        if(and){
+            md+=" , "+q1;
+        }else{
+            and=true;
+            md+=q1;
+        }
+     
+    }
+
+
+    if(and && pack.hasOwnProperty('idUnity')){
+        md+=" where idUnity="+pack.idUnity;
+        db.query(md,(Err,Result)=>{
+            if(Err) throw Err;
+            callback(null,Result);
+        })
+    }else{
+        callback("there no item to update",null)
+    }
+}
+
+const ArchivedUnity =(pack,callback)=>{
+    if(pack.hasOwnProperty("idUnity")){
+        ArchivedTable('Unity',{id:pack.idUnity},(Err,Result)=>{
+            callback(Err,Result);
+        })
+    }else{
+        callback("no id for Semestre",null)
+    }
+}
+
+const DesArchivedUnity =(pack,callback)=>{
+    if(pack.hasOwnProperty("idUnity")){
+        ArchivedTable('Unity',{id:pack.idUnity},(Err,Result)=>{
+            callback(Err,Result);
+        })
+    }else{
+        callback("no id for Semestre",null)
+    }
+}
+
+
+
+/**
+ * 
+ * @param {{Archived},{All}, {idUnity},{TypeUnity},{idTypeUnity},
+ * {idSemestre},{TypeSemestre},{idTypeSemestre},{Relvet},{idRelvet},{Student},{idStudent}} pack 
+ * @param {Err,Result} callback 
+ * 
+ * join :
+ *  Unity U 
+ *  TypeUnity TU 
+ *  Semestre SM 
+ *  TypeSemestre TS 
+ *  Relvet R 
+ *  Student S 
+ * 
+ */
+
+const SearchMultiUnity = (pack,callback)=>{
+    let Arch = "and Archived = 0 ";
+
+    if(pack.hasOwnProperty("Archived")){
+        
+            Arch = "and Archived = 1 "
+        
+    }else{
+        if(pack.hasOwnProperty('All')){
+            Arch = " ";
+        }
+    }
+
+    let q = "select U.idUnity,U.Mark,TU.idTypeUnity,TU.name as Unity,TS.idTypeSemestre,TS.name as Semestre, S.idStudent,concat(S.fisrtname,' ',S.lastname) from Unity U join TypeUnity TU join Semestre SM join TypeSemestre TS join Relvet R join Student S on SM.idTypeSemestre= ST.idTypeSemestre and U.idTypeUnity=UT.idTypeUnity and U.idSemestre = SM.idSemestre and SM.idRelvet = T.idRelvet and R.idStudent = S.idStudent ";
+
+
+    if(pack.hasOwnProperty('idUnity')){
+        let q1=" and U.idUnity = "+pack.idUnity+" ";
+        q+=q1;
+    }
+    if(pack.hasOwnProperty('TypeUnity')){
+        let q1=" and TU.name like '%"+pack.TypeUnity+"%' ";
+        q+=q1;
+    }
+    if(pack.hasOwnProperty('idTypeUnity')){
+        let q1=" and TU.idTypeUnity = "+pack.idTypeUnity+" ";
+        q+=q1;
+    }
+    if(pack.hasOwnProperty('idSemestre')){
+        let q1=" and SM.idSemestre = "+pack.idSemestre+" ";
+        q+=q1;
+    }
+    if(pack.hasOwnProperty('TypeSemestre')){
+        let q1=" and TS.name like '%"+pack.TypeSemestre+"%' ";
+        q+=q1;
+    }
+    if(pack.hasOwnProperty('idTypeSemestre')){
+        let q1=" and TS.idTypeSemestre = "+pack.idTypeSemestre+" ";
+        q+=q1;
+    }
+
+}
+
 
 module.exports={
     Relvet:{
@@ -373,7 +519,10 @@ module.exports={
     ,
     Unity:{
         AddUnity,
-        GetUnity
+        GetUnity,
+        ModifyUnity,
+        ArchivedUnity,
+        DesArchivedUnity
     }
 }
 

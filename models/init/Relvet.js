@@ -17,7 +17,7 @@ const db = require("../DB/MySqlConnection")
 */
 
 const createRelvet = (callback)=>{
-    let q = "create table Relvet(idRelvet int primary key auto_increment,date date,idStudent int,";
+    let q = "create table Relvet(idRelvet int primary key auto_increment,date date,idStudent int,Archived bool,";
     q+="constraint FK_Relvet_Student foreign key (idStudent) references Student(idStudent))"
     db.query(q,(Err,Result)=>{
         if(Err) throw Err;
@@ -28,7 +28,7 @@ const createRelvet = (callback)=>{
 
 const createSemestre= (callback)=>{
     
-    let q = "create table Semestre(idSemestre int primary key auto_increment ,idRelvet int ,idTypeSemestre int,Mark double,";
+    let q = "create table Semestre(idSemestre int primary key auto_increment ,idRelvet int ,idTypeSemestre int,Mark double,Archived bool,";
     q+="constraint FK_Semestre_TypeSemestre foreign key (idTypeSemestre) references TypeSemestre(idTypeSemestre)";
     q+="constraint FK_Semestre_Relvet foreign key (idRelvet) references Relvet(idRelvet))"
 
@@ -42,7 +42,7 @@ const createSemestre= (callback)=>{
 
 const createUnity= (callback)=>{
     
-    let q = "create table Unity(idUnity int primary key auto_increment ,Mark double,idSemestre int ,idTypeUnity int,";
+    let q = "create table Unity(idUnity int primary key auto_increment ,Mark double,idSemestre int ,idTypeUnity int,Archived bool,";
     q+="constraint FK_Unity_Semestre foreign key (idSemestre) references Semestre(idSemestre)"
     q+="constraint FK_Unity_TypeUnity foreign key (idTypeUnity) references TypeUnity(idTypeUnity))"
     

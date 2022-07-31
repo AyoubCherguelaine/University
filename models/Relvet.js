@@ -328,7 +328,14 @@ const AddUnity =(pack,callback)=>{
 
         let q="insert into Unity (idSemestre,idTypeUnity) values";
         q+=" ("+pack.idSemestre+","+pack.idTypeUnity+") ;"
-
+       
+        db.query(q,(Err,Result)=>{
+            if(Err)throw Err;
+            GetUnity({idUnity:Result.insertId},(Err,Res)=>{
+                callback(Err,Res);
+            })
+        })
+      
 
     }else{
         callback('there is no id Semestre or id Type Unity',null)
@@ -337,7 +344,13 @@ const AddUnity =(pack,callback)=>{
 
 const GetUnity = (pack,callback)=>{
     if(pack.hasOwnProperty('idUnity')){
-        
+        let q = "select U.idUnity,U.Mark,TU.idTypeUnity,TU.name as Unity,TS.idTypeSemestre,TS.name as Semestre, S.idStudent,concat(S.fisrtname,' ',S.lastname) from Unity U join TypeUnity TU join Semestre SM join TypeSemestre TS join Relvet R join Student S on SM.idTypeSemestre= ST.idTypeSemestre and U.idTypeUnity=UT.idTypeUnity and U.idSemestre = SM.idSemestre and SM.idRelvet = T.idRelvet and R.idStudent = S.idStudent ";
+        db.query(q,(Err,Result)=>{
+            if(Err)throw Err;
+            callback(null,Result);
+        })
+    }else{
+        callback("no id Unity",null)
     }
 }
 
@@ -356,6 +369,11 @@ module.exports={
         ArchivedSemestre,
         DesArchivedSemestre,
         SearchMultiSemestre
+    }
+    ,
+    Unity:{
+        AddUnity,
+        GetUnity
     }
 }
 

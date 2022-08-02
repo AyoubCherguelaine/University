@@ -442,8 +442,7 @@ const DesArchivedUnity =(pack,callback)=>{
 
 /**
  * 
- * @param {{Archived},{All}, {idUnity},{TypeUnity},{idTypeUnity},
- * {idSemestre},{TypeSemestre},{idTypeSemestre},{Relvet},{idRelvet},{Student},{idStudent}} pack 
+ * @param {{Archived},{All}, {idUnity},{TypeUnity},{idTypeUnity},{idSemestre},{TypeSemestre},{idTypeSemestre},{idRelvet},{Student},{idStudent}} pack 
  * @param {Err,Result} callback 
  * 
  * join :
@@ -469,7 +468,7 @@ const SearchMultiUnity = (pack,callback)=>{
         }
     }
 
-    let q = "select U.idUnity,U.Mark,TU.idTypeUnity,TU.name as Unity,TS.idTypeSemestre,TS.name as Semestre, S.idStudent,concat(S.fisrtname,' ',S.lastname) from Unity U join TypeUnity TU join Semestre SM join TypeSemestre TS join Relvet R join Student S on SM.idTypeSemestre= ST.idTypeSemestre and U.idTypeUnity=UT.idTypeUnity and U.idSemestre = SM.idSemestre and SM.idRelvet = T.idRelvet and R.idStudent = S.idStudent ";
+    let q = "select U.idUnity,U.Mark,TU.idTypeUnity,TU.name as Unity,TS.idTypeSemestre,TS.name as Semestre, S.idStudent,concat(S.fisrtname,' ',S.lastname) from Unity U join TypeUnity TU join Semestre SM join TypeSemestre TS join Relvet R join Student S on SM.idTypeSemestre= ST.idTypeSemestre and U.idTypeUnity=UT.idTypeUnity and U.idSemestre = SM.idSemestre and SM.idRelvet = T.idRelvet and R.idStudent = S.idStudent "+Arch;
 
 
     if(pack.hasOwnProperty('idUnity')){
@@ -496,9 +495,57 @@ const SearchMultiUnity = (pack,callback)=>{
         let q1=" and TS.idTypeSemestre = "+pack.idTypeSemestre+" ";
         q+=q1;
     }
+    //Student
+    if(pack.hasOwnProperty('idRelvet')){
+        let q1=" and R.idRelvet = "+pack.idRelvet+" ";
+        q+=q1;
+    }
+    if(pack.hasOwnProperty('Student')){
+        let q1=" and  concat(S.firstname,' ',S.lastname) like '%"+pack.Student+"%' ";
+        q+=q1;
+    }
+
+    if(pack.hasOwnProperty('idStudent')){
+        let q1=" and S.idStudent = "+pack.idStudent+" ";
+        q+=q1;
+    }
+
+
+    db.query(q,(Err,Result)=>{
+        if(Err)throw Err;
+        callback(Result)
+    })
 
 }
 
+
+
+// Module
+
+/**
+ * 
+ * @param {idModule} pack 
+ * @param {Err,Result} callback 
+ * join :
+ *  Unity U 
+ *  TypeUnity TU 
+ *  Semestre SM 
+ *  TypeSemestre TS 
+ *  Relvet R 
+ *  Student S 
+ *  Module M 
+ *  TypeModule  TM
+ */
+const GetModule = (pack,callback)=>{
+    if(pack.hasOwnProperty('idModule')){
+        let q = "select TM.name as Module,TM.Coef,TM.Credit, M.Mark as ModuleMark,M.Valide,U.idUnity,U.Mark,TU.idTypeUnity,TU.name as Unity,TS.idTypeSemestre,TS.name as Semestre, S.idStudent,concat(S.fisrtname,' ',S.lastname) from Module M join TypeModule  TM join  Unity U join TypeUnity TU join Semestre SM join TypeSemestre TS join Relvet R join Student S on M.idTypeModule=TM.idTypeModule and  SM.idTypeSemestre= ST.idTypeSemestre and U.idTypeUnity=UT.idTypeUnity and U.idSemestre = SM.idSemestre and SM.idRelvet = T.idRelvet and R.idStudent = S.idStudent and M.idModule = "+pack.idModule;       db.query(q,(Err,Result)=>{
+            if(Err)throw Err;
+            callback(null,Result);
+        })
+    }else{
+        callback('no id module',null)
+    }
+}
 
 module.exports={
     Relvet:{
@@ -522,7 +569,11 @@ module.exports={
         GetUnity,
         ModifyUnity,
         ArchivedUnity,
-        DesArchivedUnity
+        DesArchivedUnity,
+        SearchMultiUnity
+    },
+    Module:{
+
     }
 }
 

@@ -538,7 +538,8 @@ const SearchMultiUnity = (pack,callback)=>{
  */
 const GetModule = (pack,callback)=>{
     if(pack.hasOwnProperty('idModule')){
-        let q = "select TM.name as Module,TM.Coef,TM.Credit, M.Mark as ModuleMark,M.Valide,U.idUnity,U.Mark,TU.idTypeUnity,TU.name as Unity,TS.idTypeSemestre,TS.name as Semestre, S.idStudent,concat(S.fisrtname,' ',S.lastname) from Module M join TypeModule  TM join  Unity U join TypeUnity TU join Semestre SM join TypeSemestre TS join Relvet R join Student S on M.idTypeModule=TM.idTypeModule and  SM.idTypeSemestre= ST.idTypeSemestre and U.idTypeUnity=UT.idTypeUnity and U.idSemestre = SM.idSemestre and SM.idRelvet = T.idRelvet and R.idStudent = S.idStudent and M.idModule = "+pack.idModule;       db.query(q,(Err,Result)=>{
+        let q = "select TM.name as Module,TM.Coef,TM.Credit, M.Mark as ModuleMark,M.Valide,M.Session,U.idUnity,U.Mark,TU.idTypeUnity,TU.name as Unity,TS.idTypeSemestre,TS.name as Semestre, S.idStudent,concat(S.fisrtname,' ',S.lastname) from Module M join TypeModule  TM join  Unity U join TypeUnity TU join Semestre SM join TypeSemestre TS join Relvet R join Student S on M.idTypeModule=TM.idTypeModule and  SM.idTypeSemestre= ST.idTypeSemestre and U.idTypeUnity=UT.idTypeUnity and U.idSemestre = SM.idSemestre and SM.idRelvet = T.idRelvet and R.idStudent = S.idStudent and M.idModule = "+pack.idModule;       
+        db.query(q,(Err,Result)=>{
             if(Err)throw Err;
             callback(null,Result);
         })
@@ -546,6 +547,99 @@ const GetModule = (pack,callback)=>{
         callback('no id module',null)
     }
 }
+
+/**
+ * 
+ * @param {idUnity,idSession,idTypeModule,Mark} pack 
+ * @param {Err,Result} callback 
+ * 
+ */
+const AddModule = (pack,callback)=>{
+    if(pack.hasOwnProperty('idUnity') && pack.hasOwnProperty('idTypeModule') && pack.hasOwnProperty('idSession') && pack.hasOwnProperty('Mark')){
+        let q = "insert into Module (Mark,idUnity,idSession,idTypeModule) values";
+        q+=" ("+pack.Mark+","+pack.idUnity+","+pack.idSession+","+pack.idTypeModule+");";
+        db.query(q,(Err,Result)=>{
+            if(Err)throw Err;
+            id=Result.insertId;
+            GetModule({idModule:id},(Err,Result)=>{
+                callback(Err,Result);
+            })
+        })
+    }else{
+        callback("Package is not complited",null)
+    }
+}
+
+const ModifyModule = (pack,callback)=>{
+    let md = "update Module set "; 
+    let and=false
+    if(pack.hasOwnProperty('Mark')){
+        let q1 = " Mark = "+pack.Mark+" ";
+        if(and){
+            md+=" , "+q1;
+        }else{
+            and=true;
+            md+=q1;
+        }
+     
+    }
+
+    if(pack.hasOwnProperty('idUnity')){
+        let q1 = " idUnity = "+pack.idUnity+" ";
+        if(and){
+            md+=" , "+q1;
+        }else{
+            and=true;
+            md+=q1;
+        }
+     
+    }
+
+    if(pack.hasOwnProperty('idTypeModule')){
+        let q1 = " idTypeModule = "+pack.idTypeModule+" ";
+        if(and){
+            md+=" , "+q1;
+        }else{
+            and=true;
+            md+=q1;
+        }
+     
+    }
+    if(pack.hasOwnProperty('idSession')){
+        let q1 = " idSession = "+pack.idSession+" ";
+        if(and){
+            md+=" , "+q1;
+        }else{
+            and=true;
+            md+=q1;
+        }
+     
+    }
+
+    if(pack.hasOwnProperty('Valide')){
+        let q1 = " Valide = "+pack.Valide+" ";
+        if(and){
+            md+=" , "+q1;
+        }else{
+            and=true;
+            md+=q1;
+        }
+     
+    }
+
+
+
+    if(and && pack.hasOwnProperty('idModule')){
+        md+=" where idModule="+pack.idModule;
+        db.query(md,(Err,Result)=>{
+            if(Err) throw Err;
+            callback(null,Result);
+        })
+    }else{
+        callback("there no item to update",null)
+    }
+} 
+
 
 module.exports={
     Relvet:{
@@ -573,7 +667,9 @@ module.exports={
         SearchMultiUnity
     },
     Module:{
-
+        AddModule,
+        GetModule,
+        ModifyModule
     }
 }
 

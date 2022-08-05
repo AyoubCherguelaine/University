@@ -56,7 +56,7 @@ const createUnity= (callback)=>{
 
 const createModule= (callback)=>{
     
-    let q = "create table Module(idModule int primary key auto_increment ,Valide int default 1,Mark double,idUnity int ,idSession int default 1, idTypeModule int,";
+    let q = "create table Module(idModule int primary key auto_increment ,Valide int default 1,Mark double,idUnity int ,idSession int default 1, idTypeModule int,Archived bool deafult 0,";
     q+= "constraint FK_Module_Unity foreign key (idUnity) references Unity(idUnity),"
     q+= "constraint FK_Module_TypeModule foreign key (idTypeModule) references TypeModule(idTypeModule),"
     q+= "constraint FK_Module_Session foreign key (idSession) references Session(idSession),"

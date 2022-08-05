@@ -424,7 +424,7 @@ const ArchivedUnity =(pack,callback)=>{
             callback(Err,Result);
         })
     }else{
-        callback("no id for Semestre",null)
+        callback("no id for Unity",null)
     }
 }
 
@@ -434,7 +434,7 @@ const DesArchivedUnity =(pack,callback)=>{
             callback(Err,Result);
         })
     }else{
-        callback("no id for Semestre",null)
+        callback("no id for Unity",null)
     }
 }
 
@@ -641,6 +641,112 @@ const ModifyModule = (pack,callback)=>{
 } 
 
 
+const ArchivedModule =(pack,callback)=>{
+    if(pack.hasOwnProperty("idModule")){
+        ArchivedTable('Module',{id:pack.idModule},(Err,Result)=>{
+            callback(Err,Result);
+        })
+    }else{
+        callback("no id for Module",null)
+    }
+}
+
+const DesArchivedModule =(pack,callback)=>{
+    if(pack.hasOwnProperty("idModule")){
+        ArchivedTable('Module',{id:pack.idModule},(Err,Result)=>{
+            callback(Err,Result);
+        })
+    }else{
+        callback("no id for Module",null)
+    }
+}
+
+/**
+ * 
+ *@param {{Archived},{All}, {idModule},{TypeModule},{idTypeModule},{idSemestre},{TypeSemestre},{idTypeSemestre},{idRelvet},{Student},{idStudent}} pack
+ * @param {Err,Result} callback 
+ * join :
+ *  Unity U 
+ *  TypeUnity TU 
+ *  Semestre SM 
+ *  TypeSemestre TS 
+ *  Relvet R 
+ *  Student S 
+ *  Module M 
+ *  TypeModule  TM
+ */
+
+const SearchMultiModule = (pack,callback)=>{
+    let Arch = "and Archived = 0 ";
+
+    if(pack.hasOwnProperty("Archived")){
+        
+            Arch = "and Archived = 1 "
+        
+    }else{
+        if(pack.hasOwnProperty('All')){
+            Arch = " ";
+        }
+    }
+
+    let q = "select TM.name as Module,TM.Coef,TM.Credit, M.Mark as ModuleMark,M.Valide,M.Session,U.idUnity,U.Mark,TU.idTypeUnity,TU.name as Unity,TS.idTypeSemestre,TS.name as Semestre, S.idStudent,concat(S.fisrtname,' ',S.lastname) from Module M join TypeModule  TM join  Unity U join TypeUnity TU join Semestre SM join TypeSemestre TS join Relvet R join Student S on M.idTypeModule=TM.idTypeModule and  SM.idTypeSemestre= ST.idTypeSemestre and U.idTypeUnity=UT.idTypeUnity and U.idSemestre = SM.idSemestre and SM.idRelvet = T.idRelvet and R.idStudent = S.idStudent "+Arch;      
+
+    if(pack.hasOwnProperty('idModule')){
+        let q1=" and M.idModule = "+pack.idModule+" ";
+        q+=q1;
+    }
+    if(pack.hasOwnProperty('TypeModule')){
+        let q1=" and TM.name like '%"+pack.TypeModule+"%' ";
+        q+=q1;
+    }
+    if(pack.hasOwnProperty('TypeUnity')){
+        let q1=" and TU.name like '%"+pack.TypeUnity+"%' ";
+        q+=q1;
+    }
+    if(pack.hasOwnProperty('idTypeUnity')){
+        let q1=" and TU.idTypeUnity = "+pack.idTypeUnity+" ";
+        q+=q1;
+    }
+    if(pack.hasOwnProperty('idTypeModule')){
+        let q1=" and TM.idTypeModule = "+pack.idTypeModule+" ";
+        q+=q1;
+    }
+    if(pack.hasOwnProperty('idSemestre')){
+        let q1=" and SM.idSemestre = "+pack.idSemestre+" ";
+        q+=q1;
+    }
+    if(pack.hasOwnProperty('TypeSemestre')){
+        let q1=" and TS.name like '%"+pack.TypeSemestre+"%' ";
+        q+=q1;
+    }
+    if(pack.hasOwnProperty('idTypeSemestre')){
+        let q1=" and TS.idTypeSemestre = "+pack.idTypeSemestre+" ";
+        q+=q1;
+    }
+    //Student
+    if(pack.hasOwnProperty('idRelvet')){
+        let q1=" and R.idRelvet = "+pack.idRelvet+" ";
+        q+=q1;
+    }
+    if(pack.hasOwnProperty('Student')){
+        let q1=" and  concat(S.firstname,' ',S.lastname) like '%"+pack.Student+"%' ";
+        q+=q1;
+    }
+
+    if(pack.hasOwnProperty('idStudent')){
+        let q1=" and S.idStudent = "+pack.idStudent+" ";
+        q+=q1;
+    }
+
+
+    db.query(q,(Err,Result)=>{
+        if(Err)throw Err;
+        callback(Result)
+    })
+
+}
+
+
 module.exports={
     Relvet:{
         AddRelvet,
@@ -669,7 +775,10 @@ module.exports={
     Module:{
         AddModule,
         GetModule,
-        ModifyModule
+        ModifyModule,
+        ArchivedModule,
+        DesArchivedModule,
+        SearchMultiModule
     }
 }
 

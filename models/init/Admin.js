@@ -14,7 +14,7 @@ const CreateAdmin= (callback)=>{
     db.query(q,(Err,Result)=>{
 
         if(Err) throw Err;
-        callback();
+        callback(Result);
     });
 }
 
@@ -24,7 +24,7 @@ const CreateAdminSystem= (callback)=>{
     db.query(q,(Err,Result)=>{
 
         if(Err) throw Err;
-        callback();
+        callback(Result);
     });
 
 }
@@ -35,7 +35,7 @@ const CreateAdminUniversity=(callback)=>{
     db.query(q,(Err,Result)=>{
 
         if(Err) throw Err;
-        callback();
+        callback(Result);
     });
 }
 
@@ -46,7 +46,7 @@ const CreateAdminFaculty=(callback)=>{
     db.query(q,(Err,Result)=>{
 
         if(Err) throw Err;
-        callback();
+        callback(Result);
     });
 }
 

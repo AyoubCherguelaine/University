@@ -231,6 +231,13 @@ const SearchWilaya= (pack,callback)=>{
 }
 
 //University
+
+/**
+ * 
+ * @param {name,idWilaya} pack 
+ * @param {*} callback 
+ */
+
 const AddUniversity = (pack,callback)=>{
     /**
      * pack={name:'University',idWilaya:idWilaya}

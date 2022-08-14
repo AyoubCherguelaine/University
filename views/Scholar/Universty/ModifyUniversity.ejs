@@ -1,0 +1,21 @@
+<div>
+    <form method="post" action="/University/Modify/<%= University.idUniversity %>">
+
+        <div>
+            <label for="name">Name</label>
+            <input type="name" name="name" id="name" placeholder="<%= University.name %>">
+        </div>
+
+        <div>
+            <label>Archiveed</label>
+            <input type="checkbox" name="Archived" value="Archived"
+            <% if(University.Archived = 1){ %>
+                checked
+            <% } %>  
+            > 
+        </div>
+
+        <button type="submit">Valide</button>
+
+    </form>
+</div>

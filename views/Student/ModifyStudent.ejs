@@ -1,5 +1,5 @@
 <div>
-    <form>
+    <form  method="post" action="/Student/Modify/<%= Student.idStudent %>">
         <div>
             <% if(Session = "Admin"){ %>
             <div>
@@ -9,7 +9,11 @@
 
             <div>
                 <label for="Archived">Archived</label>
-                <input type="checkbox" name="Archived" id="Archived" >
+                <input type="checkbox" name="Archived" id="Archived" value="Archived"
+                <% if(Student.Archived = 1){ %>
+                    checked
+                <% } %>  
+                > 
             </div>
 
             <% } %>

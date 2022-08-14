@@ -1,5 +1,5 @@
 <div>
-    <form>
+    <form method="post" action="/University/Add">
 
         <div>
             <label for="name">name</label>
@@ -9,11 +9,13 @@
         <div>
             <label for="Wilaya">Wilaya</label>
             <select name="idWilaya" id="Wilaya">
-                <% for(let ) %>
-                <option></option>
+                <% for(let i=0;i<Wilayas.length;i++){ %>
+                <option value="<%= Wilayas[i].idWilaya  %>" ><%=   Wilayas[i].Name %></option>
+                <% } %> 
             </select>
         </div>
 
+        <button type="submit">Valide</button>
 
     </form>
 </div>

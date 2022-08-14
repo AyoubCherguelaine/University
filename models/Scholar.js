@@ -235,7 +235,7 @@ const SearchWilaya= (pack,callback)=>{
 /**
  * 
  * @param {name,idWilaya} pack 
- * @param {*} callback 
+ * @param {Err,Result} callback 
  */
 
 const AddUniversity = (pack,callback)=>{
@@ -317,7 +317,11 @@ const GetUniversitybyid = (pack,callback)=>{
     }
 }
 
-
+/**
+ * 
+ * @param {name,idUniversity} pack 
+ * @param {Err,Result} callback 
+ */
 const ModifyUniversity = (pack,callback)=>{
     /**
      * pack={name:"newUniversity",idUniversity:id}

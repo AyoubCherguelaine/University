@@ -1,0 +1,28 @@
+<div>
+
+    <!--idUniversity,U.name as University ,U.Archived as Archived,W.idWilaya, W.name as Wiayala-->
+    <main>
+
+        <% for(let i=0;i<Universitys.length;i++){ %> 
+        <div>
+            <div>
+                <div>
+                    <a href="/University/<%= Universitys[i].idUniversity  %>"><%= Universitys[i].idUniversity  %> </a>
+                </div>
+                <div>
+                    <label><%= Universitys[i].University  %> </label>
+                </div>
+                <div>
+                    <label><%= Universitys[i].idWilaya  %> </label>
+                </div>
+                <div>
+                    <label><%= Universitys[i].Wiayala  %> </label>
+                </div>
+
+            </div>
+        </div>
+
+        <% } %> 
+    </main>
+
+</div>

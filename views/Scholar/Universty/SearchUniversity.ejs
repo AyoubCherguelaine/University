@@ -1,28 +1,14 @@
 <div>
 
     <!--idUniversity,U.name as University ,U.Archived as Archived,W.idWilaya, W.name as Wiayala-->
-    <main>
+    <div class="SearchBar">
+        <input type="text" onchange="tap()" name="University" id="SearchUniversityByName" placeholder="University name" >
+        <input type="text" onchange="tap()" name="Wilaya" id="SearchUniversityByWilaya" placeholder="Wilaya" >
+   
+    </div>
 
-        <% for(let i=0;i<Universitys.length;i++){ %> 
-        <div>
-            <div>
-                <div>
-                    <a href="/University/<%= Universitys[i].idUniversity  %>"><%= Universitys[i].idUniversity  %> </a>
-                </div>
-                <div>
-                    <label><%= Universitys[i].University  %> </label>
-                </div>
-                <div>
-                    <label><%= Universitys[i].idWilaya  %> </label>
-                </div>
-                <div>
-                    <label><%= Universitys[i].Wiayala  %> </label>
-                </div>
 
-            </div>
-        </div>
-
-        <% } %> 
-    </main>
+<script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+<script src="javascript/Scholar/University.js"></script>
 
 </div>

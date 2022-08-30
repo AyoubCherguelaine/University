@@ -16,6 +16,30 @@ const Err = (s,ms=3000)=>{
 
 }
 
+var Search=0
+
+const tap = ()=>{
+    Search+=1;
+    let s = Search;
+
+    setTimeout(OnSearch(s),4000);
+}
+
+const OnSearch = (s)=>{
+    if(Search == s){
+        Search=0;
+        // make the event happen 
+        pack={
+            University : document.getElementById('SearchUniversityByName').value,
+            Wilaya : document.getElementById('SearchUniversityByWilaya').value
+        }
+        socket.emit('SearchUniversity',pack);
+
+    }else{
+        return false;
+    }
+}
+
 const ClickSubmitAddUniversity = ()=>{
     let name = document.getElementById('name').value;
     let idWilaya = document.getElementById('Wilaya').value;
@@ -62,4 +86,8 @@ socket.on('CreateError',(ErrText)=>{
 
 socket.on('ModifyErr',(ErrText)=>{
     Err(ErrText,5000);
+})
+
+socket.on('SearchResult',(Universitys)=>{
+    
 })

@@ -14,6 +14,8 @@ app.use(cookieParser());
 age = 1000*60*60*24;
 console.log("age : " + age);
 app.use(session({secret: "nothing",maxAge:age}));
+app.use(express.static('public'));
+
 
 
 

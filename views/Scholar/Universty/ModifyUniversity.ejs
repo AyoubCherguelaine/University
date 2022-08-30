@@ -1,6 +1,11 @@
 <div>
-    <form method="post" action="/University/Modify/<%= University.idUniversity %>">
+    <div id="Err" class="Error">
 
+    </div>
+
+    <div>
+   
+        <input type="hidden" name="idUniversity" id="idUniversity" value="<%= University.idUniversity %>">
         <div>
             <label for="name">Name</label>
             <input type="name" name="name" id="name" placeholder="<%= University.name %>">
@@ -8,14 +13,18 @@
 
         <div>
             <label>Archiveed</label>
-            <input type="checkbox" name="Archived" value="Archived"
+            <input type="checkbox" id="Archived" name="Archived" 
             <% if(University.Archived = 1){ %>
                 checked
             <% } %>  
             > 
         </div>
 
-        <button type="submit">Valide</button>
+        <button onclick="ClickSubmitModifyUniversity">Valide</button>
 
-    </form>
+    </div>
+
+
+<script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+<script src="javascript/Scholar/University.js">
 </div>

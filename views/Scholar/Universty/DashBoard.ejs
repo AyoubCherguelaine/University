@@ -5,17 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>University</title>
+
+
+
+<script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+<script src="javascript/Scholar/University.js"></script>
+
+
+<!-- this page require {Wilayas,Element}-->
+
 </head>
 <body>
     
     <!--here the nav bar general-->
+
+    <% include('AddUniversity') %> 
+
     <div >
 
     </div>
-    <% include(SearchUniversity) %> 
+    <% include('SearchUniversity') %> 
+
+    <div>
+
+    </div>
 
 
+    <% include('UniversityList') %> 
 
+    <div>
+
+    </div>
+
+   
+
+    
 
 </body>
 </html>

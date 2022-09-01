@@ -16,26 +16,41 @@ const Err = (s,ms=3000)=>{
 
 }
 
-var Search=0
+var Search=1
 
 const tap = ()=>{
     Search+=1;
     let s = Search;
 
-    setTimeout(OnSearch(s),4000);
+    setTimeout(GetUniversitys(s),4000);
 }
 
-const OnSearch = (s)=>{
+const GetUniversitys = (s)=>{
     if(Search == s){
-        Search=0;
+        Search=1;
         // make the event happen 
         pack={
             University : document.getElementById('SearchUniversityByName').value,
             Wilaya : document.getElementById('SearchUniversityByWilaya').value
         }
-        socket.emit('SearchUniversity',pack);
-
+        socket.emit('GetUniversitys',pack);
+        return true;
     }else{
+        if(s==0){
+            Search=1;
+            let Lid = document.getElementById('LastUniversityId').value;
+            if(Lid == '0'){
+                Lid=1;
+            }
+        // make the event happen 
+        pack={
+            Lid:parseInt(Lid) ,
+            University : document.getElementById('SearchUniversityByName').value,
+            Wilaya : document.getElementById('SearchUniversityByWilaya').value
+        }
+        socket.emit('GetUniversitys',pack);
+        return true;
+        }
         return false;
     }
 }
@@ -79,6 +94,35 @@ const ClickSubmitModifyUniversity = ()=>{
     }
 }
 
+const CreateUniversityBox = (U)=>{
+
+    let htm = "<div>"
+    htm+= '<div class="idUniversityShow">'+U.idUniversity+'</div>';
+    htm+= '<div class="nameUniversityShow">'+U.name+'</div>'
+    htm+= ' <div class="nameWilayaShow">'+U.Wilaya+'</div>'
+    htm+='<div class="DetailButoon"> <button onClick="GetUniversity('+U.idUniversity+')" >Detail</button>  </div> '
+    htm+='</div>'
+    return htm
+
+}
+
+const AddToUniversityList = (U)=>{
+    const Box = document.getElementById('UList');
+    let Lid = document.getElementById('LastUniversityId')
+    Lid.value = U.idUniversity;
+    let New = CreateUniversityBox(U);
+    Box.innerHTML+=New
+}
+
+const GetMore = ()=>{
+    let Lid = document.getElementById('LastUniversityId').value;
+    if(parseInt(Lid)>0){
+        GetUniversitys(0)
+    }else{
+        Err('Problem in the last id of university ');
+    }
+}
+
 socket.on('CreateError',(ErrText)=>{
     Err(ErrText,5000);
 })
@@ -88,6 +132,14 @@ socket.on('ModifyErr',(ErrText)=>{
     Err(ErrText,5000);
 })
 
-socket.on('SearchResult',(Universitys)=>{
-    
+socket.on('Universitys',(Universitys)=>{
+
 })
+
+socket.on('UniversityUpdate',(university)=>{
+
+})
+
+window.onload =()=>{
+    GetUniversitys(0);
+}

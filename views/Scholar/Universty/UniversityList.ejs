@@ -7,10 +7,13 @@
         </div>
 
         <div  class="UniversityList" id="UList">
-            
+           
         </div>
 
-
+        <% if(Element>20){ %> 
+            <input type="hidden" id="LastUniversityId" value="0">
+            <button onclick="GetMore()"  >Get More</button>
+        <% } %>     
     </div>
 
 </div>

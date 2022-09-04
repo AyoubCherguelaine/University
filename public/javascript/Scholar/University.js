@@ -25,6 +25,10 @@ const tap = ()=>{
     setTimeout(GetUniversitys(s),4000);
 }
 
+const GetUniversity= (id)=>{
+    window.location = '/University/'+id;
+}
+
 const GetUniversitys = (s)=>{
     if(Search == s){
         Search=1;
@@ -77,22 +81,8 @@ const ClickSubmitAddUniversity = ()=>{
 
 }
 
-const ClickSubmitModifyUniversity = ()=>{
-    let idUniversity = document.getElementById('idUniversity').value;
-    let name = document.getElementById('name').value;
-    let Arch = document.getElementById('Archived').value;
-    if(parseInt(idUniversity)>0 && name.length>5){
-        let pack={
-            idUniversity:idUniversity,
-            name:name,
-            Archived:Arch
-        }
-    
-        socket.emit('ModifyUniversity',pack);
-    }else{
-        Err('data is not comleted')
-    }
-}
+
+// Universitys
 
 const CreateUniversityBox = (U)=>{
 
@@ -114,6 +104,8 @@ const AddToUniversityList = (U)=>{
     Box.innerHTML+=New
 }
 
+// end
+
 const GetMore = ()=>{
     let Lid = document.getElementById('LastUniversityId').value;
     if(parseInt(Lid)>0){
@@ -133,7 +125,11 @@ socket.on('ModifyErr',(ErrText)=>{
 })
 
 socket.on('Universitys',(Universitys)=>{
-
+    if(Universitys.length>0){
+        for(let i =0;i<Universitys.length;i++){
+            AddToUniversityList(Universitys[i]);
+        }
+    }
 })
 
 socket.on('UniversityUpdate',(university)=>{

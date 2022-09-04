@@ -1,0 +1,24 @@
+<div>
+
+    <!--idUniversity,U.name as University ,U.Archived as Archived,W.idWilaya, W.name as Wiayala-->
+    <div class="SearchBar">
+        <% if(University.hasOwnProperty(idUniversity)){ %>
+
+            <div>
+                <input type="hidden" name="idUniversity" id="idUniversity" value="<%= University.idUniversity %>">
+                <input type="text" onchange="tap()" name="Faculty" id="SearchFacultyByName" placeholder="Faculty name">
+            </div>
+           
+        </div>
+            <label for="SearchUniversityByArchived">Archived</label>
+            <input type="checkbox" onchange="tap()" name="check" id="SearchUniversityByArchived" >
+        </div>
+    
+        <% }else{ %>
+               there is problem  </div>
+            <% } %> 
+     
+
+<script src="javascript/Scholar/Faculty.js"></script>
+
+</div>

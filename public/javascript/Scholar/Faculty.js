@@ -33,6 +33,10 @@ const GetMore = ()=>{
     }
 }
 
+const GetFaculty = (id)=>{
+    socket.emit('GetFacultyDetail',id);
+}
+
 const GetFacultys = (s)=>{
     if(Search == s){
         Search=1;

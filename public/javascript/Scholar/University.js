@@ -137,5 +137,7 @@ socket.on('UniversityUpdate',(university)=>{
 })
 
 window.onload =()=>{
+
+    document.getElementsByClassName('FacultyDetail')[0].style.display = 'none';
     GetUniversitys(0);
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test I Frame</title>
+</head>
+<body>
+    <div>
+        bayna devision
+        <button onclick="changeFrame()">
+            changeFrame
+        </button>
+    </div>
+
+    <iframe id="iframe" src="https://fr.wikipedia.org/wiki/Main_Page" width="640" height="480" ></iframe>
+</body>
+
+<script>
+         var f = document.getElementById('iframe');
+    const changeFrame= ()=>{
+        
+      f.style.display = 'block'
+        
+        f.setAttribute('src','https://fr.wikipedia.org/wiki/Louis_Lafuma');
+        f.contentDocument.location.reload(true);
+     
+        console.log(f.getAttribute('src'))
+   }   
+
+   window.onload = ()=>{
+        f.style.display = 'none'
+   }
+</script>
+</html>

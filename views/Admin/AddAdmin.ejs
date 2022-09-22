@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Admin</title>
+    <script src="/javascript/auth/Admin.js"></script>
+</head>
+<body>
+    <form id="FormCreatAdmin">
+        <label id="ErrCreating" class="Error"></label>
+        <input type="text" name="name" placeholder="name" id="name">
+        <input type="password" name="password" placeholder="password" id="password">
+        <input type="checkbox" id="checkShow" placeholder="Show password" onchange="ShowPassword()">
+        <input type="password" placeholder="confirme password" id="confirme">
+
+        <select name="Roll" id="Roll" >
+            <option value="System">System Admin</option>
+            <option value="University">University Admin</option>
+            <option value="Faculty">Faculty Admin </option>
+        </select>
+
+        
+    </form>
+    <button onclick="">submit</button>
+    
+</body>
+</html>

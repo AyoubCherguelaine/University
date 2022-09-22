@@ -18,19 +18,27 @@
 </body>
 
 <script>
-         var f = document.getElementById('iframe');
-    const changeFrame= ()=>{
+//          var f = document.getElementById('iframe');
+//     const changeFrame= ()=>{
         
-      f.style.display = 'block'
+//       f.style.display = 'block'
         
-        f.setAttribute('src','https://fr.wikipedia.org/wiki/Louis_Lafuma');
-        f.contentDocument.location.reload(true);
+//         f.setAttribute('src','https://fr.wikipedia.org/wiki/Louis_Lafuma');
+//         f.contentDocument.location.reload(true);
      
-        console.log(f.getAttribute('src'))
-   }   
+//         console.log(f.getAttribute('src'))
+//    }   
 
-   window.onload = ()=>{
-        f.style.display = 'none'
-   }
+//    window.onload = ()=>{
+//         f.style.display = 'none'
+//    }
+
+      const pro = new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            resolve('alger');
+        },100);
+      });
+
+      pro.then('njqh','no').then('kjfds','shfsfh').then('fhsf','rhsf');
 </script>
 </html>

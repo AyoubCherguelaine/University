@@ -100,7 +100,6 @@ const CheckAdmin = (auth,callback)=>{
 
 }
 
-
 const CheckProfessor = (auth,callback)=>{
     if(auth.hasOwnProperty('matricule') && auth.hasOwnProperty('password') && auth.hasOwnProperty("use")){
 
@@ -116,16 +115,16 @@ const CheckProfessor = (auth,callback)=>{
                     Lastname:row.lastname,
                     Matricule:row.matricule,
                 }
-                callback(user);
+                callback(null,user);
             }else{
 
                 let user = null;
-                callback(user)
+                callback(null,user)
             }
         });
 
     }else{
-        Err="Terrkhef package rah ghlet"
+        Err=" package rah ghlet"
         callback(Err,null);
     }
 }
@@ -146,14 +145,14 @@ const CheckStudent =(auth,callback)=>{
                     Lastname:row.lastname,
                     matricule:row.matricule
                 }
-                callback(user);
+                callback(null,user)
             }else{
                 let user = null;
-                callback(user)
+                callback(null,user)
             }
         })
     }else{
-        Err="Terrkhef package rah ghlet ";
+        Err=" package rah ghlet ";
         callback(Err,null);
     }
 
@@ -235,5 +234,9 @@ const AddAdmin=(pack,callback)=>{
 
 
 
-module.exports= {CheckAdmin,CheckProfessor,CheckStudent,AddAdmin};
+module.exports= {
+    CheckAdmin,
+    CheckProfessor,
+    CheckStudent,
+    AddAdmin};
 

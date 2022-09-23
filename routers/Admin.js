@@ -10,5 +10,4 @@ router.get('/CreateAdmin',AdminControllers.GetCreateAdmin);
 
 router.post('/CreateAdmin',AdminControllers.PostCreateAdmin);
 
-
 module.exports = router;

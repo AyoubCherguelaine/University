@@ -31,12 +31,9 @@ const submitCreatAdmin = ()=>{
     const form= document.getElementById('FormCreatAdmin');
     const pass1 = document.getElementById('password');
     const pass2= document.getElementById('confirme');
-    if(pass1.value == pass2.value){
-        let sub = document.createElement('button');
-        sub.type= 'submit';
-        
-        form.appendChild(sub);
-        sub.click();
+  
+    if(pass1.value == pass2.value  ){
+       form.submit();
     }else{
 
         Err.innerHTML = "password are not the same !!!"

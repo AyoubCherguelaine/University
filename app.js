@@ -21,10 +21,9 @@ console.log("age : " + age);
 app.use(session({secret: "nothing",maxAge:age}));
 app.use(express.static('public'));
 
-app.use('/Admin',AdminRouter)
+app.use('/Admin',AdminRouter);
 
-
-app.listen(3001,()=>{
-    
+app.listen(3000 || process.env.PORT,()=>{
+    console.log(process.env.PORT);
 })
 

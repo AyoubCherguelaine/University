@@ -65,6 +65,32 @@ const GetCreateAdmin = (req,res)=>{
 }
 
 const PostCreateAdmin = (req,res)=>{
+
+    /*
+
+    */ 
+    Auth.Roll(req,(err,user)=>{
+        if(err){
+            res.send('there is problem ');
+            console.log(err);
+        }else{
+            if(user.hasOwnProperty('noSession')){
+                //block ip
+                // tyahllo
+            }else{
+                if(user.hasOwnProperty('idAdmin') && user.hasOwnProperty('roll') && user.roll=='Sys'){
+                    // this man is real 
+                    
+
+                }else{
+                    req.session={};
+                    res.send('go stupid man ');
+
+                }
+            }
+        }
+    })
+
     console.log(req.body);
 }
 
